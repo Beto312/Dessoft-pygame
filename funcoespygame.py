@@ -2,8 +2,13 @@ import pygame
 
 pygame.init()
 
-window = pygame.display.set_mode((900, 600))
+largura = 1500
+altura = 775
+
+window = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Fireboy and Watergirl')
+telainicial = pygame.image.load("---.png")
+telainicial = imagem_fundo = pygame.transform.scale(telainicial,(largura, altura))
 
 game = True
 while game == True:
