@@ -2,12 +2,12 @@ import pygame
 
 pygame.init()
 
-largura = 900
-altura = 775
+largura = 1080
+altura = 720
 
 window = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Fireboy and Watergirl')
-telainicial = pygame.image.load("assets\img\inicial.png").convert()
+telainicial = pygame.image.load("assets/img/fireboyandwatergirl.png").convert()
 rect = telainicial.get_rect()
 img_fundo = pygame.transform.scale(telainicial,(largura, altura))
 
