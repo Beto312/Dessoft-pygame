@@ -14,7 +14,7 @@ img_fundo = pygame.transform.scale(telainicial,(largura, altura))
 # configurações do botão:
 corbotao = (0, 255, 0)
 botao_x = largura // 2 - 115  #posição horizontal do botão
-botao_y = altura // 2 + 280   #posição vertical do botão
+botao_y = altura // 2 + 240   #posição vertical do botão
 botao_larg = 250   #largura
 botao_h = 59    #altura 
 fonte = pygame.font.Font(None, 40)
