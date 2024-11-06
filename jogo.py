@@ -28,6 +28,7 @@ assets = load_assets(img_dir)
 all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
 player = Player(assets['PLAYER_IMG'], 12, 2, blocks)
+player2 = Player(assets['PLAYER_IMG2'], 20, 2, blocks)
 for row in range(len(MAP)):
     for column in range(len(MAP[row])):
         tile_type = MAP[row][column]
@@ -36,6 +37,7 @@ for row in range(len(MAP)):
             all_sprites.add(tile)
             blocks.add(tile)
 all_sprites.add(player)
+all_sprites.add(player2)
 PLAYING = 0
 DONE = 1
 state = PLAYING
@@ -73,11 +75,23 @@ while game == True:
                     player.image = pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT))
                 elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
                     player.jump()
+                if event.key == pygame.K_a:
+                    player2.speedx -= SPEED_X
+                    player2.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
+                elif event.key == pygame.K_d:
+                    player2.speedx += SPEED_X
+                    player2.image = pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT))
+                elif event.key == pygame.K_w:
+                    player2.jump()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     player.speedx = 0
                 elif event.key == pygame.K_RIGHT:
                     player.speedx = 0
+                if event.key == pygame.K_a:
+                    player2.speedx = 0
+                elif event.key == pygame.K_d:
+                    player2.speedx = 0
         all_sprites.update()
         window.fill(BLACK)
         all_sprites.draw(window)

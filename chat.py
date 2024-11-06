@@ -134,6 +134,7 @@ class Player(pygame.sprite.Sprite):
 def load_assets(img_dir):
     assets = {}
     assets['PLAYER_IMG'] = pygame.image.load(path.join(img_dir, 'Fireboy.png')).convert_alpha()
+    assets['PLAYER_IMG2'] = pygame.image.load(path.join(img_dir, 'watergirl.png')).convert_alpha()
     assets['BLOCK_IMG'] = pygame.image.load(path.join(img_dir, 'pedra.jpg')).convert()
     return assets
 
