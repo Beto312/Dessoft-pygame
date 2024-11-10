@@ -1,5 +1,5 @@
 import pygame
-from chat import *
+from mapa import *
 
 pygame.init()
 
@@ -27,17 +27,22 @@ clock = pygame.time.Clock()
 assets = load_assets(img_dir)
 all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
-player = Player(assets['PLAYER_IMG'], 12, 2, blocks)
+player = Player(assets['PLAYER_IMG'], 50, 2, blocks)
 player2 = Player(assets['PLAYER_IMG2'], 20, 2, blocks)
 for row in range(len(MAP)):
     for column in range(len(MAP[row])):
         tile_type = MAP[row][column]
-        if tile_type == BLOCK:
-            tile = Tile(assets['BLOCK_IMG'], row, column)
+        if tile_type in assets.keys():
+            tile = Tile(assets[tile_type], row, column)
             all_sprites.add(tile)
             blocks.add(tile)
 all_sprites.add(player)
 all_sprites.add(player2)
+
+telaprincipal = pygame.image.load("assets/img/Background.png").convert()
+rect = telaprincipal.get_rect()
+img_fundo_jogo = pygame.transform.scale(telaprincipal,(largura, altura))
+
 PLAYING = 0
 DONE = 1
 state = PLAYING
@@ -94,6 +99,7 @@ while game == True:
                     player2.speedx = 0
         all_sprites.update()
         window.fill(BLACK)
+        window.blit(img_fundo_jogo, rect)
         all_sprites.draw(window)
         pygame.display.flip()
 
