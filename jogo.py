@@ -29,15 +29,17 @@ assets = load_assets(img_dir)
 all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
 
-diamante = Diamantefire(600,150)
-diamantef = Diamantefire(650,150)
+# diamantes de fogo - coordenadas
+diamante = Diamantefire(600,420)
+diamantef = Diamantefire(160,90)
 diamantefi = Diamantefire(500,150)
-diamantefir = Diamantefire(550,680)
+diamantefir = Diamantefire(700,660)
 
-diamante2 = Diamantewater(250,150)
-diamante2w = Diamantewater(300,150)
+# diamantes de água - coordenadas
+diamante2 = Diamantewater(250,390)
+diamante2w = Diamantewater(40,175)
 diamante2wa = Diamantewater(350,150)
-diamante2wat = Diamantewater(200,680)
+diamante2wat = Diamantewater(400,660)
 
 
 diamantes = pygame.sprite.Group()
