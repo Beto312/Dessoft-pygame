@@ -164,6 +164,24 @@ class Player(pygame.sprite.Sprite):
             self.speedy -= JUMP_SIZE
             self.state = JUMPING
 
+class Fire(pygame.sprite.Sprite): 
+    def __init__(self, x, y, fireanimation_frames): 
+        super().__init__() 
+        self.animation_frames = fireanimation_frames 
+        self.current_frame = 0 
+        self.image = self.animation_frames[self.current_frame] 
+        self.rect = self.image.get_rect() 
+        self.rect.topleft = (x, y)
+        self.animation_speed = 0.15 
+        self.animation_timer = 0
+
+    def update(self):
+        self.animation_timer += self.animation_speed 
+        if self.animation_timer >= 1: 
+            self.animation_timer = 0 
+            self.current_frame = (self.current_frame + 1) % len(self.animation_frames) 
+            self.image = self.animation_frames[self.current_frame]
+
 # Função para carregar todos os assets de uma vez
 def load_assets(img_dir):
     assets = {}
@@ -189,5 +207,14 @@ def load_assets(img_dir):
     assets['TILE_POINT_UP_LEFT_DOWN_RIGHT'] = pygame.image.load(path.join(img_dir, 'Tile_19.png')).convert()
     assets['TILE_POINT_UP_RIGHT_DOWN_LEFT'] = pygame.image.load(path.join(img_dir, 'Tile_29.png')).convert()
 
+
+    # Carregar as imagens de animação de fogo
+    fireanimation_frames = []
+    for i in range(0, 48):
+        frame_path = path.join(img_dir, f'flame_{i}.png')  # Ajustado para flame_0.png até flame_48.png
+        frame = pygame.image.load(frame_path).convert_alpha()
+        frame = pygame.transform.scale(frame, (25, 25))
+        fireanimation_frames.append(frame)
+    assets['FIRE_ANIMATION'] = fireanimation_frames
 
     return assets
