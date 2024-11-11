@@ -24,11 +24,38 @@ tela_atual = 'inicial'
 
 
 clock = pygame.time.Clock()
+start_ticks = 0
 assets = load_assets(img_dir)
 all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
-player = Player(assets['PLAYER_IMG'], 50, 2, blocks)
-player2 = Player(assets['PLAYER_IMG2'], 20, 2, blocks)
+
+diamante = Diamantefire(600,150)
+diamantef = Diamantefire(650,150)
+diamantefi = Diamantefire(500,150)
+diamantefir = Diamantefire(550,680)
+
+diamante2 = Diamantewater(250,150)
+diamante2w = Diamantewater(300,150)
+diamante2wa = Diamantewater(350,150)
+diamante2wat = Diamantewater(200,680)
+
+
+diamantes = pygame.sprite.Group()
+diamantes2 = pygame.sprite.Group()
+
+
+diamantes.add(diamante)
+diamantes.add(diamantef)
+diamantes.add(diamantefi)
+diamantes.add(diamantefir)
+diamantes2.add(diamante2)
+diamantes2.add(diamante2w)
+diamantes2.add(diamante2wa)
+diamantes2.add(diamante2wat)
+
+player = Player(assets['PLAYER_IMG'], 50, 2, blocks, diamantes)
+player2 = Player(assets['PLAYER_IMG2'], 20, 2, blocks, diamantes2)
+
 for row in range(len(MAP)):
     for column in range(len(MAP[row])):
         tile_type = MAP[row][column]
@@ -38,6 +65,14 @@ for row in range(len(MAP)):
             blocks.add(tile)
 all_sprites.add(player)
 all_sprites.add(player2)
+all_sprites.add(diamante)
+all_sprites.add(diamantef)
+all_sprites.add(diamantefi)
+all_sprites.add(diamantefir)
+all_sprites.add(diamante2)
+all_sprites.add(diamante2w)
+all_sprites.add(diamante2wa)
+all_sprites.add(diamante2wat)
 
 telaprincipal = pygame.image.load("assets/img/Background.png").convert()
 rect = telaprincipal.get_rect()
@@ -55,7 +90,7 @@ while game == True:
                 game = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-            # se o maouse estiver entre a pos. horizontal e largura, se o mouse estiver entre a pos. vertical e altura, tela_atual == True
+            # se o mouse estiver entre a pos. horizontal e largura, se o mouse estiver entre a pos. vertical e altura, tela_atual == True
                 if botao_x <= mouse_x <= botao_x + botao_larg and botao_y <= mouse_y <= botao_y + botao_h and tela_atual:
                     tela_atual = 'jogo'
 
@@ -68,6 +103,11 @@ while game == True:
 
     elif tela_atual == 'jogo': 
         clock.tick(FPS)
+        
+        # Calcula o tempo em segundos desde o início do jogo
+        seconds = (pygame.time.get_ticks() - start_ticks) // 1000
+
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game = False
@@ -101,8 +141,14 @@ while game == True:
         window.fill(BLACK)
         window.blit(img_fundo_jogo, rect)
         all_sprites.draw(window)
+        texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
+        window.blit(texto_tempo, (10,10))
+
         pygame.display.flip()
 
     pygame.display.update()
+
+    hits = pygame.sprite.spritecollide(player, diamantes, True)
+    hits2 = pygame.sprite.spritecollide(player2, diamantes2, True)
 
 pygame.quit()

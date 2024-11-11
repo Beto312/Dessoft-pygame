@@ -18,6 +18,13 @@ PLAYER_WIDTH = TILE_SIZE * 0.8
 PLAYER_HEIGHT = int(TILE_SIZE * 1.5)
 FPS = 60  # Frames por segundo
 
+#define as imagens dos diamantes
+firediamante_img = pygame.image.load("assets/img/1.png")
+firediamante_img = pygame.transform.scale(firediamante_img, (25, 25))
+
+waterdiamante_img = pygame.image.load("assets/img/8.png")
+waterdiamante_img = pygame.transform.scale(waterdiamante_img, (25, 25))
+
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -80,9 +87,31 @@ class Tile(pygame.sprite.Sprite):
         self.rect.x = TILE_SIZE * column
         self.rect.y = TILE_SIZE * row
 
+# Classe que representa os diamantes do fireboy
+class Diamantefire(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = firediamante_img
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def collect(self, player):
+        return player.character == 'player'
+
+# Classe que representa os diamantes da watergitl
+class Diamantewater(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = waterdiamante_img
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def collect(self, player):
+        return player.character == 'player2'
+
 # Classe Jogador que representa o herói
 class Player(pygame.sprite.Sprite):
-    def __init__(self, player_img, row, column, blocks):
+    def __init__(self, player_img, row, column, blocks,diamantes):
         pygame.sprite.Sprite.__init__(self)
         self.state = STILL
         player_img = pygame.transform.scale(player_img, (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -93,6 +122,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = row * TILE_SIZE
         self.speedx = 0
         self.speedy = 0
+        self.diamantes = diamantes
+        self.score = 0
 
     def update(self):
         self.speedy += GRAVITY
@@ -122,6 +153,11 @@ class Player(pygame.sprite.Sprite):
                 self.rect.right = collision.rect.left
             elif self.speedx < 0:
                 self.rect.left = collision.rect.right
+
+        d_coletados = pygame.sprite.spritecollide(self, self.diamantes, True)
+        if d_coletados:
+            self.score += len(d_coletados)  
+            print(f"Pontuação: {self.score}")
 
     def jump(self):
         if self.state == STILL:
@@ -154,66 +190,4 @@ def load_assets(img_dir):
     assets['TILE_POINT_UP_RIGHT_DOWN_LEFT'] = pygame.image.load(path.join(img_dir, 'Tile_29.png')).convert()
 
 
-
-
-
-
-
     return assets
-
-# Função principal do jogo
-# def game_screen(screen):
-    # clock = pygame.time.Clock()
-    # assets = load_assets(img_dir)
-    # all_sprites = pygame.sprite.Group()
-    # blocks = pygame.sprite.Group()
-    # player = Player(assets['PLAYER_IMG'], 12, 2, blocks)
-    # for row in range(len(MAP)):
-    #     for column in range(len(MAP[row])):
-    #         tile_type = MAP[row][column]
-    #         if tile_type == 'TILE_CENTER':
-    #             tile = Tile(assets[''TILE_CENTER'_IMG'], row, column)
-    #             all_sprites.add(tile)
-    #             blocks.add(tile)
-    # all_sprites.add(player)
-    # PLAYING = 0
-    # DONE = 1
-    # state = PLAYING
-    # while state != DONE:
-        # clock.tick(FPS)
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         state = DONE
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_LEFT:
-        #             player.speedx -= SPEED_X
-        #             player.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
-        #         elif event.key == pygame.K_RIGHT:
-        #             player.speedx += SPEED_X
-        #             player.image = pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT))
-        #         elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
-        #             player.jump()
-        #     if event.type == pygame.KEYUP:
-        #         if event.key == pygame.K_LEFT:
-        #             player.speedx = 0
-        #         elif event.key == pygame.K_RIGHT:
-        #             player.speedx = 0
-        # all_sprites.update()
-        # screen.fill(BLACK)
-        # all_sprites.draw(screen)
-        # pygame.display.flip()
-
-# Inicialização do Pygame.
-# pygame.init()
-# pygame.mixer.init()
-# screen = pygame.display.set_mode((WIDTH, HEIGHT))
-# pygame.display.set_caption(TITULO)
-# print('*' * len(TITULO))
-# print(TITULO.upper())
-# print('*' * len(TITULO))
-# print('Utilize as setas do teclado para andar e pular.')
-
-# try:
-#     game_screen(screen)
-# finally:
-#     pygame.quit()
