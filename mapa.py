@@ -164,6 +164,7 @@ class Player(pygame.sprite.Sprite):
             self.speedy -= JUMP_SIZE
             self.state = JUMPING
 
+#  Classe que representa a animação do fogo
 class Fire(pygame.sprite.Sprite): 
     def __init__(self, x, y, fireanimation_frames): 
         super().__init__() 
@@ -213,7 +214,7 @@ def load_assets(img_dir):
     for i in range(0, 48):
         frame_path = path.join(img_dir, f'flame_{i}.png')  # Ajustado para flame_0.png até flame_48.png
         frame = pygame.image.load(frame_path).convert_alpha()
-        frame = pygame.transform.scale(frame, (25, 25))
+        frame = pygame.transform.scale(frame, (30, 30))
         fireanimation_frames.append(frame)
     assets['FIRE_ANIMATION'] = fireanimation_frames
 
