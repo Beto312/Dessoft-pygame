@@ -29,6 +29,18 @@ assets = load_assets(img_dir)
 all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
 
+# portais
+fire_portal_pos = (920, 630)
+fire_portal_pos2 = (950, 650)
+water_portal_pos = (1000, 650)
+water_portal_pos2 = (1000, 650)
+
+# Crie retângulos para detectar as colisões
+fire_portal_rect = assets['FIRE_PORTAL'].get_rect(topleft=fire_portal_pos)
+fire_portal_rect2 = assets['FIRE_PORTAL2'].get_rect(topleft=fire_portal_pos2)
+water_portal_rect = assets['WATER_PORTAL'].get_rect(topleft=water_portal_pos)
+water_portal_rect2 = assets['WATER_PORTAL2'].get_rect(topleft=water_portal_pos2)
+
 # diamantes de fogo - coordenadas
 diamante = Diamantefire(600,420)
 diamantef = Diamantefire(160,90)
@@ -153,6 +165,7 @@ while game == True:
         all_sprites.update()
         window.fill(BLACK)
         window.blit(img_fundo_jogo, rect)
+        window.blit(assets['FIRE_PORTAL'],fire_portal_pos)
         all_sprites.draw(window)
 
         for fire in fire_pos:

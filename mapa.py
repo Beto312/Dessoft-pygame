@@ -25,6 +25,10 @@ firediamante_img = pygame.transform.scale(firediamante_img, (25, 25))
 waterdiamante_img = pygame.image.load("assets/img/8.png")
 waterdiamante_img = pygame.transform.scale(waterdiamante_img, (25, 25))
 
+
+
+
+
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -207,7 +211,10 @@ def load_assets(img_dir):
     assets['TILE_POINT_DOWN_LEFT'] = pygame.image.load(path.join(img_dir, 'Tile_04.png')).convert()
     assets['TILE_POINT_UP_LEFT_DOWN_RIGHT'] = pygame.image.load(path.join(img_dir, 'Tile_19.png')).convert()
     assets['TILE_POINT_UP_RIGHT_DOWN_LEFT'] = pygame.image.load(path.join(img_dir, 'Tile_29.png')).convert()
-
+    assets['FIRE_PORTAL'] = pygame.image.load(path.join(img_dir, 'door1.png')).convert_alpha()
+    assets['FIRE_PORTAL2'] = pygame.image.load(path.join(img_dir, 'door2.png')).convert_alpha()
+    assets['WATER_PORTAL'] = pygame.image.load(path.join(img_dir, 'door3.png')).convert_alpha()
+    assets['WATER_PORTAL2'] = pygame.image.load(path.join(img_dir, 'door4.png')).convert_alpha()
 
     # Carregar as imagens de animação de fogo
     fireanimation_frames = []
@@ -217,5 +224,6 @@ def load_assets(img_dir):
         frame = pygame.transform.scale(frame, (30, 30))
         fireanimation_frames.append(frame)
     assets['FIRE_ANIMATION'] = fireanimation_frames
+
 
     return assets
