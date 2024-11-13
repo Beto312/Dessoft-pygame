@@ -42,7 +42,7 @@ GRAVITY = 0.60
 # Define a velocidade inicial no pulo
 JUMP_SIZE = TILE_SIZE * 0.41
 # Define a velocidade em x
-SPEED_X = 3.6
+SPEED_X = 4.5
 
 # Define os tipos de tiles
 BLOCK = 0

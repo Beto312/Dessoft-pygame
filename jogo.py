@@ -31,10 +31,10 @@ all_sprites = pygame.sprite.Group()
 blocks = pygame.sprite.Group()
 
 # portais
-fire_portal_pos = (920, 630)
-fire_portal_pos2 = (950, 650)
-water_portal_pos = (1000, 650)
-water_portal_pos2 = (1000, 650)
+fire_portal_pos = (930, 60)
+fire_portal_pos2 = (930, 60)
+water_portal_pos = (870, 60)
+water_portal_pos2 = (870, 60)
 
 # Crie retângulos para detectar as colisões
 fire_portal_rect = assets['FIRE_PORTAL'].get_rect(topleft=fire_portal_pos)
@@ -171,8 +171,21 @@ while game == True:
             all_sprites.update()
             window.fill(BLACK)
             window.blit(img_fundo_jogo, rect)
-            window.blit(assets['FIRE_PORTAL'],fire_portal_pos)
+            # window.blit(assets['FIRE_PORTAL'],fire_portal_pos)
+            # window.blit(assets['WATER_PORTAL'],water_portal_pos)
+            if player.rect.colliderect(fire_portal_rect):
+                window.blit(assets['FIRE_PORTAL2'], fire_portal_pos2)
+            else:
+                window.blit(assets['FIRE_PORTAL'], fire_portal_pos)
+
+            if player2.rect.colliderect(water_portal_rect):
+                window.blit(assets['WATER_PORTAL2'], water_portal_pos2)
+            else:
+                window.blit(assets['WATER_PORTAL'], water_portal_pos)
+            if player.rect.colliderect(fire_portal_rect) and player2.rect.colliderect(water_portal_rect):
+                game = False
             all_sprites.draw(window)
+
 
             for fire in fire_pos:
                 fire["frame_index"] = (fire["frame_index"] + 1) % len(fire_animation)
@@ -187,7 +200,8 @@ while game == True:
             texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
             window.blit(texto_tempo, (10, 10))
             pygame.display.flip()
-        
+
+
         elif state == PAUSED:
             draw_pause_screen()
             for event in pygame.event.get():
