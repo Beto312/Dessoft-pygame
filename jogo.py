@@ -11,7 +11,8 @@ pygame.display.set_caption('Fireboy and Watergirl')
 telainicial = pygame.image.load("assets/img/fireboyandwatergirl.png").convert()
 rect = telainicial.get_rect()
 img_fundo = pygame.transform.scale(telainicial,(largura, altura))
-
+tela_pause = pygame.image.load("assets/img/pause_foto.png").convert()
+tela_pause = pygame.transform.scale(tela_pause, (largura, altura))
 
 # configurações do botão:
 corbotao = (0, 255, 0)
@@ -108,12 +109,7 @@ fire_pos = [
 # Função para desenhar a tela de pausa
 def draw_pause_screen():
     window.fill((0, 0, 0))
-    pause_text = fonte.render("Jogo Pausado", True, (255, 255, 255))
-    resume_text = fonte.render("Pressione P para Continuar", True, (255, 255, 255))
-    restart_text = fonte.render("Pressione R para Reiniciar", True, (255, 255, 255))
-    window.blit(pause_text, (largura // 2 - pause_text.get_width() // 2, altura // 2 - 50))
-    window.blit(resume_text, (largura // 2 - resume_text.get_width() // 2, altura // 2))
-    window.blit(restart_text, (largura // 2 - restart_text.get_width() // 2, altura // 2 + 50))
+    window.blit(tela_pause, (0,0))
     pygame.display.flip()
 
 game = True
