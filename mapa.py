@@ -38,11 +38,11 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # Define a aceleração da gravidade
-GRAVITY = 0.5
+GRAVITY = 0.60
 # Define a velocidade inicial no pulo
-JUMP_SIZE = TILE_SIZE * 0.35
+JUMP_SIZE = TILE_SIZE * 0.41
 # Define a velocidade em x
-SPEED_X = 3.2
+SPEED_X = 3.6
 
 # Define os tipos de tiles
 BLOCK = 0

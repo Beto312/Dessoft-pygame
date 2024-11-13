@@ -12,6 +12,7 @@ telainicial = pygame.image.load("assets/img/fireboyandwatergirl.png").convert()
 rect = telainicial.get_rect()
 img_fundo = pygame.transform.scale(telainicial,(largura, altura))
 
+
 # configurações do botão:
 corbotao = (0, 255, 0)
 botao_x = largura // 2 - 115  #posição horizontal do botão
@@ -93,19 +94,27 @@ rect = telaprincipal.get_rect()
 img_fundo_jogo = pygame.transform.scale(telaprincipal,(largura, altura))
 
 PLAYING = 0
-DONE = 1
+PAUSED = 1
 state = PLAYING
 
 # posição do fogo
 fire_animation = assets['FIRE_ANIMATION']
 fire_pos = [
-    {"pos": (380, 665), "frame_index": 0},
     {"pos": (390, 665), "frame_index": 0},
     {"pos": (400, 665), "frame_index": 0},
-    {"pos": (410, 665), "frame_index": 0}
+
 ]
-# fire_index = 0
-# fire_pos = (450, 390)
+
+# Função para desenhar a tela de pausa
+def draw_pause_screen():
+    window.fill((0, 0, 0))
+    pause_text = fonte.render("Jogo Pausado", True, (255, 255, 255))
+    resume_text = fonte.render("Pressione P para Continuar", True, (255, 255, 255))
+    restart_text = fonte.render("Pressione R para Reiniciar", True, (255, 255, 255))
+    window.blit(pause_text, (largura // 2 - pause_text.get_width() // 2, altura // 2 - 50))
+    window.blit(resume_text, (largura // 2 - resume_text.get_width() // 2, altura // 2))
+    window.blit(restart_text, (largura // 2 - restart_text.get_width() // 2, altura // 2 + 50))
+    pygame.display.flip()
 
 game = True
 while game == True:
@@ -127,64 +136,75 @@ while game == True:
             window.blit(img_fundo, rect)
 
     elif tela_atual == 'jogo': 
-        clock.tick(FPS)
-        
-        # Calcula o tempo em segundos desde o início do jogo
-        seconds = (pygame.time.get_ticks() - start_ticks) // 1000
+        if state == PLAYING:
+            clock.tick(FPS)
+            seconds = (pygame.time.get_ticks() - start_ticks) // 1000
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        state = PAUSED
+                    elif event.key == pygame.K_LEFT:
+                        player.speedx -= SPEED_X
+                        player.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
+                    elif event.key == pygame.K_RIGHT:
+                        player.speedx += SPEED_X
+                        player.image = pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT))
+                    elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
+                        player.jump()
+                    elif event.key == pygame.K_a:
+                        player2.speedx -= SPEED_X
+                        player2.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
+                    elif event.key == pygame.K_d:
+                        player2.speedx += SPEED_X
+                        player2.image = pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT))
+                    elif event.key == pygame.K_w:
+                        player2.jump()
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                        player.speedx = 0
+                    elif event.key == pygame.K_a or event.key == pygame.K_d:
+                        player2.speedx = 0
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    player.speedx -= SPEED_X
-                    player.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
-                elif event.key == pygame.K_RIGHT:
-                    player.speedx += SPEED_X
-                    player.image = pygame.transform.scale(assets['PLAYER_IMG'], (PLAYER_WIDTH, PLAYER_HEIGHT))
-                elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
-                    player.jump()
-                if event.key == pygame.K_a:
-                    player2.speedx -= SPEED_X
-                    player2.image = pygame.transform.flip(pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT)), True, False)
-                elif event.key == pygame.K_d:
-                    player2.speedx += SPEED_X
-                    player2.image = pygame.transform.scale(assets['PLAYER_IMG2'], (PLAYER_WIDTH, PLAYER_HEIGHT))
-                elif event.key == pygame.K_w:
-                    player2.jump()
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    player.speedx = 0
-                elif event.key == pygame.K_RIGHT:
-                    player.speedx = 0
-                if event.key == pygame.K_a:
-                    player2.speedx = 0
-                elif event.key == pygame.K_d:
-                    player2.speedx = 0
-        all_sprites.update()
-        window.fill(BLACK)
-        window.blit(img_fundo_jogo, rect)
-        window.blit(assets['FIRE_PORTAL'],fire_portal_pos)
-        all_sprites.draw(window)
+            all_sprites.update()
+            window.fill(BLACK)
+            window.blit(img_fundo_jogo, rect)
+            window.blit(assets['FIRE_PORTAL'],fire_portal_pos)
+            all_sprites.draw(window)
 
-        for fire in fire_pos:
-            fire["frame_index"] = (fire["frame_index"] + 1) % len(fire_animation)
-            fire_image = fire_animation[fire["frame_index"]]
-            window.blit(fire_image, fire["pos"])
+            for fire in fire_pos:
+                fire["frame_index"] = (fire["frame_index"] + 1) % len(fire_animation)
+                fire_image = fire_animation[fire["frame_index"]]
+                window.blit(fire_image, fire["pos"])
 
-        # Colisão do player2 com o fogo
-            fire_rect = fire_image.get_rect(topleft=fire["pos"])
+                # Colisão do player2 com o fogo
+                fire_rect = fire_image.get_rect(topleft=fire["pos"])
             if fire_rect.colliderect(player2.rect):
-                pygame.quit()
+                game = False
 
-        texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
-        window.blit(texto_tempo, (10, 10))
-        pygame.display.flip()
+            texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
+            window.blit(texto_tempo, (10, 10))
+            pygame.display.flip()
+        
+        elif state == PAUSED:
+            draw_pause_screen()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        state = PLAYING
+                    # elif event.key == pygame.K_r:
+                    #     tela_atual = 'inicial'
+                    #     state = PLAYING
+                    #     start_ticks = pygame.time.get_ticks()  # Reinicia o tempo
 
     pygame.display.update()
 
 pygame.quit()
+
 
 
 
