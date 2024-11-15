@@ -180,6 +180,18 @@ class Fire(pygame.sprite.Sprite):
         self.animation_speed = 0.15 
         self.animation_timer = 0
 
+#  Classe que representa a animação da água
+class Water(pygame.sprite.Sprite): 
+    def __init__(self, x, y, wateranimation_frames): 
+        super().__init__() 
+        self.animation_frames = wateranimation_frames 
+        self.current_frame = 0 
+        self.image = self.animation_frames[self.current_frame] 
+        self.rect = self.image.get_rect() 
+        self.rect.topleft = (x, y)
+        self.animation_speed = 0.15 
+        self.animation_timer = 0
+
     def update(self):
         self.animation_timer += self.animation_speed 
         if self.animation_timer >= 1: 
@@ -221,9 +233,17 @@ def load_assets(img_dir):
     for i in range(0, 48):
         frame_path = path.join(img_dir, f'flame_{i}.png')  # Ajustado para flame_0.png até flame_48.png
         frame = pygame.image.load(frame_path).convert_alpha()
-        frame = pygame.transform.scale(frame, (30, 30))
+        frame = pygame.transform.scale(frame, (25, 25))
         fireanimation_frames.append(frame)
     assets['FIRE_ANIMATION'] = fireanimation_frames
 
+    # Carregar as imagens de animação de água
+    wateranimation_frames = []
+    for i in range(0, 48):
+        frame_path = path.join(img_dir, f'water_{i}.png')  # Ajustado para water_0.png até water_48.png
+        frame = pygame.image.load(frame_path).convert_alpha()
+        frame = pygame.transform.scale(frame, (25, 25))
+        wateranimation_frames.append(frame)
+    assets['WATER_ANIMATION'] = wateranimation_frames
 
     return assets

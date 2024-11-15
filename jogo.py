@@ -79,6 +79,7 @@ for row in range(len(MAP)):
             tile = Tile(assets[tile_type], row, column)
             all_sprites.add(tile)
             blocks.add(tile)
+
 all_sprites.add(player)
 all_sprites.add(player2)
 all_sprites.add(diamante)
@@ -101,9 +102,18 @@ state = PLAYING
 # posição do fogo
 fire_animation = assets['FIRE_ANIMATION']
 fire_pos = [
-    {"pos": (390, 665), "frame_index": 0},
-    {"pos": (400, 665), "frame_index": 0},
+    {"pos": (390, 670), "frame_index": 0},
+    {"pos": (400, 670), "frame_index": 0},
+    {"pos": (410, 670), "frame_index": 0}
+]
 
+# posição da água
+water_animation = assets['WATER_ANIMATION']
+water_pos = [
+    {"pos": (690, 670),"frame_index": 0},
+    {"pos": (700, 670),"frame_index": 0},
+    # {"pos": (1025, 430),"frame_index": 0},
+    # {"pos": (690, 430),"frame_index": 0},
 ]
 
 # Função para desenhar a tela de pausa
@@ -182,17 +192,29 @@ while game == True:
                 game = False
             all_sprites.draw(window)
 
-
+            # configurações do fogo
             for fire in fire_pos:
                 fire["frame_index"] = (fire["frame_index"] + 1) % len(fire_animation)
                 fire_image = fire_animation[fire["frame_index"]]
                 window.blit(fire_image, fire["pos"])
-
                 # Colisão do player2 com o fogo
                 fire_rect = fire_image.get_rect(topleft=fire["pos"])
+
             if fire_rect.colliderect(player2.rect):
                 game = False
 
+            # configurações da água
+            for water in water_pos:
+                water["frame_index"] = (water["frame_index"] + 1) % len(water_animation)
+                water_image = water_animation[water["frame_index"]]
+                window.blit(water_image, water["pos"])
+                # Colisão do player com a água
+                water_rect = water_image.get_rect(topleft=water["pos"])
+
+            if water_rect.colliderect(player.rect):
+                game = False
+
+            # cronômetro
             texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
             window.blit(texto_tempo, (10, 10))
             pygame.display.flip()
