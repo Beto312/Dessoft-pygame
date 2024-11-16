@@ -3,6 +3,11 @@ from mapa import *
 
 pygame.init()
 
+# Adicionar música de fundo
+pygame.mixer.music.load("assets/music/Pixel 9.mp3")  # Substitua pelo caminho do arquivo de áudio
+pygame.mixer.music.set_volume(0.5)  # Ajusta o volume (0.0 a 1.0)
+pygame.mixer.music.play(-1)  # -1 faz a música tocar em loo
+
 largura = 1080
 altura = 720
 
@@ -19,9 +24,9 @@ tela_gameover = pygame.transform.scale(tela_gameover, (largura, altura))
 # configurações do botão:
 corbotao = (0, 255, 0)
 botao_x = largura // 2 - 115  #posição horizontal do botão
-botao_y = altura // 2 + 280   #posição vertical do botão
+botao_y = altura // 2 + 240   #posição vertical do botão
 botao_larg = 250   #largura
-botao_h = 59    #altura 
+botao_h = 70    #altura 
 fonte = pygame.font.Font(None, 40)
 texto_botao = fonte.render("Start Game", True, (255, 255, 255))
 tela_atual = 'inicial'
