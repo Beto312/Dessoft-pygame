@@ -13,6 +13,8 @@ rect = telainicial.get_rect()
 img_fundo = pygame.transform.scale(telainicial,(largura, altura))
 tela_pause = pygame.image.load("assets/img/pause_foto.png").convert()
 tela_pause = pygame.transform.scale(tela_pause, (largura, altura))
+tela_gameover = pygame.image.load("assets/img/GAMEOVERpng.png").convert()
+tela_gameover = pygame.transform.scale(tela_gameover, (largura, altura))
 
 # configurações do botão:
 corbotao = (0, 255, 0)
@@ -102,20 +104,30 @@ state = PLAYING
 # posição do fogo
 fire_animation = assets['FIRE_ANIMATION']
 fire_pos = [
-    {"pos": (390, 670), "frame_index": 0},
-    {"pos": (400, 670), "frame_index": 0},
-    {"pos": (410, 670), "frame_index": 0}
+    {"pos": (290, 673), "frame_index": 0},
+    {"pos": (300, 673), "frame_index": 0},
+    {"pos": (310, 673), "frame_index": 0},
+    {"pos": (470, 430), "frame_index": 0},
+    {"pos": (480, 430), "frame_index": 0},
+    {"pos": (1030, 580),"frame_index": 0},
+    {"pos": (660, 130),"frame_index": 0},
 ]
 
 # posição da água
 water_animation = assets['WATER_ANIMATION']
 water_pos = [
-    {"pos": (690, 670),"frame_index": 0},
-    {"pos": (700, 670),"frame_index": 0},
-    # {"pos": (1025, 430),"frame_index": 0},
-    # {"pos": (690, 430),"frame_index": 0},
+    {"pos": (490, 673),"frame_index": 0},
+    {"pos": (500, 673),"frame_index": 0},
+    {"pos": (510, 673),"frame_index": 0},
+    {"pos": (1030, 430),"frame_index": 0},
+    {"pos": (20, 190), "frame_index": 0},
+    {"pos": (200, 160), "frame_index": 0},
+    {"pos": (210, 160), "frame_index": 0},
 ]
-
+def draw_gameover_screen():
+    window.fill((0, 0, 0))
+    window.blit(tela_gameover, (0, 0))
+    pygame.display.flip()
 # Função para desenhar a tela de pausa
 def draw_pause_screen():
     window.fill((0, 0, 0))
@@ -148,6 +160,8 @@ while game == True:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    draw_gameover_screen()
+                    pygame.time.delay(2000)
                     game = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
@@ -189,6 +203,7 @@ while game == True:
             else:
                 window.blit(assets['WATER_PORTAL'], water_portal_pos)
             if player.rect.colliderect(fire_portal_rect) and player2.rect.colliderect(water_portal_rect):
+                pygame.time.delay(2000)
                 game = False
             all_sprites.draw(window)
 
@@ -200,8 +215,10 @@ while game == True:
                 # Colisão do player2 com o fogo
                 fire_rect = fire_image.get_rect(topleft=fire["pos"])
 
-            if fire_rect.colliderect(player2.rect):
-                game = False
+                if fire_rect.colliderect(player2.rect):
+                    draw_gameover_screen()
+                    pygame.time.delay(2000)
+                    game = False
 
             # configurações da água
             for water in water_pos:
@@ -211,8 +228,10 @@ while game == True:
                 # Colisão do player com a água
                 water_rect = water_image.get_rect(topleft=water["pos"])
 
-            if water_rect.colliderect(player.rect):
-                game = False
+                if water_rect.colliderect(player.rect):
+                    draw_gameover_screen()
+                    pygame.time.delay(2000)
+                    game = False
 
             # cronômetro
             texto_tempo = fonte.render(f"Tempo: {seconds}s", True, (255, 255, 255))
