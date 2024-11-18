@@ -219,6 +219,14 @@ def map_tiles(matrix):
                 bottom_right = has_tile(i + 1, j + 1)
 
                 # Determine tile type
+                # if i == 0:
+                #     mapped_matrix[i][j] = 'TILE_BOTTOM'
+                # elif i == 24:
+                #     mapped_matrix[i][j] = 'TILE_TOP'
+                # elif j == 0:
+                #     mapped_matrix[i][j] = 'TILE_LEFT'
+                # elif j == 36:
+                #     mapped_matrix[i][j] = 'TILE_RIGHT'
                 if top and bottom and left and right:
                     mapped_matrix[i][j] = 'TILE_CENTER'
                 elif top and left and not bottom and not right:
@@ -238,9 +246,9 @@ def map_tiles(matrix):
                 elif right and not top and not bottom and not left:
                     mapped_matrix[i][j] = 'TILE_LEFT'
                 elif top and bottom and left and not right:
-                    mapped_matrix[i][j] = 'TILE_EDGE_LEFT'
+                    mapped_matrix[i][j] = 'TILE_RIGHT'
                 elif top and bottom and right and not left:
-                    mapped_matrix[i][j] = 'TILE_EDGE_RIGHT'
+                    mapped_matrix[i][j] = 'TILE_LEFT'
                 elif top and left and bottom and right:
                     mapped_matrix[i][j] = 'TILE_POINT_UP_LEFT_DOWN_RIGHT'
                 elif top and right and bottom and left:
@@ -259,6 +267,7 @@ def map_tiles(matrix):
                     mapped_matrix[i][j] = 'TILE_TOP'
                 else:
                     mapped_matrix[i][j] = 'TILE_CENTER'
+                
 
             if matrix[i][j] == 2:
                 mapped_matrix[i][j] = 'WATER_PORTAL'
@@ -277,6 +286,7 @@ def map_tiles(matrix):
                 mapped_matrix[i][j] = 'FIRE_ANIMATION'
             if matrix[i][j] == 9:
                 mapped_matrix[i][j] = 'PLAYER_FIRE'
+            
 
     return mapped_matrix
 
@@ -318,6 +328,7 @@ def read_map_image(map_name):
 MAPS = {
     1: read_map_image("mapa3.png"), 
     2: read_map_image("mapa2.png"),
+    3: read_map_image("mapa1.png"),
     # 3: MAP3,
     # 4: MAP4,
     # 5: MAP5
