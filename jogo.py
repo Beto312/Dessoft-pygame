@@ -5,9 +5,9 @@ from maps import *
 pygame.init()
 
 # Adicionar música de fundo
-pygame.mixer.music.load("assets/music/Pixel 9.mp3")  # Substitua pelo caminho do arquivo de áudio
-pygame.mixer.music.set_volume(0.5)  # Ajusta o volume (0.0 a 1.0)
-pygame.mixer.music.play(-1)  # -1 faz a música tocar em loo
+pygame.mixer.music.load("assets/music/Pixel 9.mp3")  
+pygame.mixer.music.set_volume(0.5)  
+pygame.mixer.music.play(-1)  
 
 largura = 1080
 altura = 720
@@ -64,11 +64,11 @@ while keep_game_open == True:
                 if botao_x <= mouse_x <= botao_x + botao_larg and botao_y <= mouse_y <= botao_y + botao_h and game_state:
                     game_state = "Fase"
 
-            # botão
+            # Botão
             pygame.draw.rect(window, corbotao, (botao_x, botao_y, botao_larg, botao_h))
             window.blit(texto_botao, (botao_x + 50, botao_y + 10))
 
-            # imagem na frente do botão
+            # Imagem na frente do botão
             window.fill((255, 255, 255))
             window.blit(img_fundo, rect)
 
