@@ -326,10 +326,11 @@ def read_map_image(map_name):
     return map_tiles(list_of_lists)
 
 MAPS = {
-    1: read_map_image("mapa3.png"), 
+    1: read_map_image("mapa1.png"), 
     2: read_map_image("mapa2.png"),
-    3: read_map_image("mapa1.png"),
-    # 3: MAP3,
-    # 4: MAP4,
+    3: read_map_image("mapa3.png"),
+    4: read_map_image("mapa4.png"),
+    5: read_map_image("mapa5.png"),
+
     # 5: MAP5
 }
