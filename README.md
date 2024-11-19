@@ -1,9 +1,10 @@
 # Dessoft-pygame
 Pygame 
+Maira Gentil, João Zaltron e Roberto Machado
 
 # Fireboy and Watergirl: Descrição do Jogo e Jogabilidade  
 
-Fireboy and Watergirl é um jogo de plataforma cooperativo onde dois jogadores controlam personagens com habilidades únicas: Fireboy, que domina o fogo, e Watergirl, que controla a água. O objetivo do jogo é ultrapassar os obstáculos e alcançar os portais em conjunto.  
+Fireboy and Watergirl é um jogo cooperativo onde dois jogadores controlam personagens com habilidades únicas: Fireboy, que domina o fogo, e Watergirl, que controla a água. O objetivo do jogo é ultrapassar os obstáculos e alcançar  em conjunto os portais.  
 
 # Jogabilidade  
 - Controles Independentes: Fireboy e Watergirl são controlados separadamente, permitindo que dois jogadores joguem ao mesmo tempo no mesmo teclado.  
@@ -18,3 +19,5 @@ Fireboy and Watergirl é um jogo de plataforma cooperativo onde dois jogadores c
   - Fireboy coleta diamantes vermelhos.  
   - Watergirl coleta diamantes azuis.  
   - Ambos precisam chegar às suas respectivas portas de saída para completar o nível.  
+
+Link do jogo: https://youtu.be/auSu2Euqzow
